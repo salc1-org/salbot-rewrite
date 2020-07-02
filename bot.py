@@ -19,6 +19,10 @@ async def on_ready():
     client.help_command = commands.MinimalHelpCommand()
 
     for cog in os.listdir("cogs/"):
+        if not cog.endswith(".py"):
+            return
+        cog = cog[:-3]
+        logger.debug(f"Loading {cog}")
         client.load_extension("cogs." + cog)
 
 
