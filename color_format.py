@@ -63,7 +63,7 @@ class ColoredFormatter(logging.Formatter):
         return super().format(record)
 
 
-def basicConfig(logger: Logger):
+def colorFormat(logger: Logger):
     stdout = logging.StreamHandler(sys.stdout)
     stdout.setLevel(DEBUG)
     color_format = formatter_message(
