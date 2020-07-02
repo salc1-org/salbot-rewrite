@@ -17,7 +17,7 @@ class DiscordFormatter(logging.Handler):
 
     def __init__(self):
         super().__init__(logging.DEBUG)
-        self.webhook = Webhook.from_url(config.webhook_url, adapter=RequestsWebhookAdapter())
+        self.webhook = Webhook.from_url(config.WEBHOOK_URL, adapter=RequestsWebhookAdapter())
 
     def emit(self, record: logging.LogRecord) -> None:
         message = self.format(record)
