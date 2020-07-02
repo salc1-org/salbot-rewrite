@@ -24,7 +24,6 @@ while True:
         if isinstance(e, ConnectionAbortedError):
             launcher_logger.info("Shutting down salbot")
             break
-        launcher_logger.error("Salbot failed to load")
-        raise e
-    launcher_logger.info("Salbot crashed")
-    break
+        launcher_logger.critical("Salbot failed to load", exc_info=e)
+        break
+    launcher_logger.info("Salbot crashed, restarting!")
