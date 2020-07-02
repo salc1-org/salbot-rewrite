@@ -20,7 +20,7 @@ async def on_ready():
 
     for cog in os.listdir("cogs/"):
         if not cog.endswith(".py"):
-            return
+            continue
         cog = cog[:-3]
         logger.debug(f"Loading {cog}")
         client.load_extension("cogs." + cog)
