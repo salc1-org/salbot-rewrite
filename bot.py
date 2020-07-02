@@ -26,5 +26,5 @@ async def on_ready():
         client.load_extension("cogs." + cog)
 
 logger.warning("Test error")
-client.run(config.token)
+client.run(config.TOKEN)
 raise ConnectionAbortedError
