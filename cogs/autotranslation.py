@@ -27,6 +27,5 @@ class AutoTranslation(commands.Cog):
         await message.channel.send(translated.text)
 
 
-
 def setup(client):
     client.add_cog(AutoTranslation(client))
