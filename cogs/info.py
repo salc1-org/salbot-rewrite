@@ -7,7 +7,7 @@ import typing
 import logging
 
 
-class info(commands.Cog):
+class Info(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.logger = logging.getLogger("salbot.info")
@@ -32,4 +32,4 @@ class info(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(info(client))
+    client.add_cog(Info(client))
