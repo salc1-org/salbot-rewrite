@@ -17,6 +17,8 @@ class AutoTranslation(commands.Cog):
     async def on_message(self, message: discord.Message):
         if not message.guild:
             return
+        if not message.author.bot:
+            return
         detected = self.translator.detect(message.content)
         if detected.confidence < .5:
             return
