@@ -3,30 +3,49 @@ Created by Epic at 7/2/20
 """
 import discord
 from discord.ext import commands
+from discord.ext.commands import has_any_role
 import config
 import logging
 import os
 
-client = commands.Bot("!", allowed_mentions=discord.AllowedMentions(everyone=False, roles=False, users=True))
+bot = commands.Bot("!", allowed_mentions=discord.AllowedMentions(everyone=False, roles=False, users=True))
 logger = logging.getLogger("salbot.core")
 
-client.remove_command("help")
+bot.remove_command("help")
 
 
-@client.event
+@bot.event
 async def on_ready():
-    logger.info("Salbot launched")
-    client.help_command = commands.MinimalHelpCommand()
+    logger.info("Launching SalBot")
+    bot.help_command = commands.MinimalHelpCommand()
 
     for cog in os.listdir("cogs/"):
         if not cog.endswith(".py"):
             continue
         cog = cog[:-3]
         logger.debug(f"Loading {cog}")
-        client.load_extension("cogs." + cog)
+        try:
+            bot.load_extension("cogs." + cog)
+        except:
+            logger.error(f"Failed to load cog {cog}", exc_info=True)
+
+@bot.command(name="reload")
+@has_any_role("Administrator", "Moderator")
+async def reload(ctx):
+    logger.info("Reloading SalBot")
+
+    for cog in os.listdir("cogs/"):
+        if not cog.endswith(".py"):
+            continue
+        cog = cog[:-3]
+        logger.debug(f"Reloading {cog}")
+        try:
+            bot.reload_extension("cogs." + cog)
+        except:
+            logger.error(f"Failed to reload cog {cog}", exc_info=True)
 
 try:
-    client.run(config.TOKEN)
+    bot.run(config.TOKEN)
 except RuntimeError:
     pass
 raise ConnectionAbortedError
