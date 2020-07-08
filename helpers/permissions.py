@@ -1,3 +1,6 @@
+"""
+Created by vcokltfre at 2020-07-08
+"""
 import discord
 import functools
 from discord.ext import commands
