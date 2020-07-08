@@ -25,6 +25,7 @@ class Shunt(commands.Cog):
         for member in members:
             await member.move_to(to, reason="Shunting")
         await ctx.channel.send(f"Moved {len(members)} members to {to}")
+        self.logger.info(f"Moved {len(members)} members to {to}")
 
 
 def setup(bot):
