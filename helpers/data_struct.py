@@ -3,6 +3,7 @@ Created by vcokltfre at 2020-07-08
 """
 import discord
 
+
 class MessageQueue:
     def __init__(self, length: int):
         self.maxlen = length
