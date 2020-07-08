@@ -1,8 +1,6 @@
 """
 Created by vcokltfre at 2020-07-08
 """
-import discord
-import functools
 from discord.ext import commands
 
 
@@ -16,6 +14,7 @@ def is_mod_or_dev():
         raise commands.errors.MissingPermissions(["MODERATOR"])
 
     return commands.check(check)
+
 
 def is_dev():
     developer_ids = [397745647723216898, 297045071457681409, 151347084602245120]

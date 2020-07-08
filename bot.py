@@ -1,12 +1,13 @@
 """
 Created by Epic at 7/2/20
 """
-import discord
-from discord.ext import commands
-from discord.ext.commands import has_any_role
-import config
 import logging
 import os
+
+import discord
+from discord.ext import commands
+
+import config
 from helpers.permissions import is_dev
 
 bot = commands.Bot("!", allowed_mentions=discord.AllowedMentions(everyone=False, roles=False, users=True))
@@ -30,8 +31,9 @@ async def on_ready():
         except:
             logger.error(f"Failed to load cog {cog}", exc_info=True)
 
+
 @bot.command(name="reload")
-@is_dev
+@is_dev()
 async def reload(ctx):
     logger.info("Reloading SalBot")
 
@@ -44,6 +46,7 @@ async def reload(ctx):
             bot.reload_extension("cogs." + cog)
         except:
             logger.error(f"Failed to reload cog {cog}", exc_info=True)
+
 
 try:
     bot.run(config.TOKEN)
