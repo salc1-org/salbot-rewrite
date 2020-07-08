@@ -21,6 +21,7 @@ async def on_ready():
     logger.info("Launching SalBot")
     bot.help_command = commands.MinimalHelpCommand()
 
+    bot.load_extension("jishaku")
     for cog in os.listdir("cogs/"):
         if not cog.endswith(".py"):
             continue

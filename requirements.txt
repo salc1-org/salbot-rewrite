@@ -1,3 +1,4 @@
 git+git://github.com/Rapptz/discord.py.git
 googletrans
 sentry-sdk
+jishaku
