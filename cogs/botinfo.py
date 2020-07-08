@@ -37,9 +37,8 @@ class BotInfo(commands.Cog):
     @has_any_role("Administrator", "Moderator")
     async def stats_bot(self, ctx, typ="raw"):
         if typ == "raw":
-            jsd = json.dumps(self.socket_stats)
+            jsd = json.dumps(self.socket_stats, indent=4)
             desc = f"```json\n{jsd}```"
-            desc = desc.replace(",", ",\n")
             embed = discord.Embed(title="Raw Socket Stats", color=0xFF0000, description=desc, timestamp=datetime.now())
             await ctx.channel.send(embed=embed)
 
