@@ -1,21 +1,15 @@
 import discord
 import functools
+from discord.ext import commands
 
 
-class PermissionsError(Exception):
-    pass
+def is_moderator():
+    developer_ids = [397745647723216898, 297045071457681409, 151347084602245120]
+    moderator_roles = ["Administrator", "Moderator"]
 
+    async def check(ctx):
+        if any([i.name in moderator_roles for i in ctx.author.roles]) or ctx.author.id in developer_ids:
+            return True
+        raise commands.errors.MissingPermissions(["MODERATOR"])
 
-devs = [397745647723216898, 297045071457681409, 151347084602245120]
-
-
-def developer(func):
-    @functools.wraps(func)
-    async def wrap_int(*args, **kwargs):
-        author = args[1].author
-        usroles = [role.name for role in author.roles]
-        if not "Administrator" in usroles or "Moderator" in usroles or author.id in devs:
-            raise PermissionsError(f"{author} is not a mod, admin, or dev.")
-        return await func(*args, **kwargs)
-
-    return wrap_int
+    return commands.check(check)
