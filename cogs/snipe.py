@@ -35,7 +35,7 @@ class Snipe(commands.Cog):
         if len(self.deletes[str(mid)].messages) < amount:
             amount = len(self.deletes[str(mid)].messages)
 
-        embed = discord.Embed(title=f"Snipe of last {amount} messages")
+        embed = discord.Embed(title=f"Snipe of last {amount} messages", color=0xFFFF00)
         for i in range(amount):
             item = self.deletes[str(mid)].pop()
             embed.add_field(name=f"{item.author}",
