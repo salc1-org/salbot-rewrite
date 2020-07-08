@@ -7,8 +7,8 @@ import logging
 
 
 class Faq(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.bot = bot
         self.logger = logging.getLogger("salbot.faq")
         self.questions = [
             {
@@ -48,5 +48,5 @@ class Faq(commands.Cog):
         await ctx.send(text)
 
 
-def setup(client):
-    client.add_cog(Faq(client))
+def setup(bot):
+    bot.add_cog(Faq(bot))
