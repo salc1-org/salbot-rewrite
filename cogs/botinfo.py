@@ -15,10 +15,10 @@ class BotInfo(commands.Cog):
         self.logger = logging.getLogger("salbot.botinfo")
         self.uptime_start = round(time.time())
         self.stats = {
-            "session_messages":0,
-            "session_commands_completed":0,
-            "session_member_join":0,
-            "session_member_leave":0
+            "session_messages": 0,
+            "session_commands_completed": 0,
+            "session_member_join": 0,
+            "session_member_leave": 0
         }
 
     def event_count(self) -> int:
@@ -38,7 +38,7 @@ class BotInfo(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         self.stats["session_member_join"] += 1
-    
+
     @commands.Cog.listener()
     async def on_member_leave(self, member):
         self.stats["session_member_leave"] += 1
@@ -48,13 +48,18 @@ class BotInfo(commands.Cog):
     async def stats_cmd(self, ctx):
         uptime = str(timedelta(seconds=round(time.time() - self.uptime_start)))
 
-        stats_embed = discord.Embed(title="SalBot Statistics", color=0x3AE12B, timestamp=datetime.now())
+        stats_embed = discord.Embed(
+            title="SalBot Statistics", color=0x3AE12B, timestamp=datetime.now())
 
         stats_embed.add_field(name="Uptime", value=uptime, inline=True)
-        stats_embed.add_field(name="Member Count", value=str(ctx.guild.member_count), inline=True)
-        stats_embed.add_field(name="Events", value=str(self.event_count()), inline=True)
-        stats_embed.add_field(name="Messages this Session", value=str(self.stats["session_messages"]), inline=True)
-        stats_embed.add_field(name="Commands this Session", value=str(self.stats["session_commands_completed"]), inline=True)
+        stats_embed.add_field(name="Member Count", value=str(
+            ctx.guild.member_count), inline=True)
+        stats_embed.add_field(name="Events", value=str(
+            self.event_count()), inline=True)
+        stats_embed.add_field(name="Messages this Session", value=str(
+            self.stats["session_messages"]), inline=True)
+        stats_embed.add_field(name="Commands this Session", value=str(
+            self.stats["session_commands_completed"]), inline=True)
 
         await ctx.channel.send(embed=stats_embed)
 
