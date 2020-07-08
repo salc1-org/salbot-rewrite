@@ -6,8 +6,9 @@ Created by Epic at 7/2/20
 
 import logging
 from color_format import colorFormat
-import discord
 from discord_logger import DiscordFormatter
+import sentry_sdk
+import config
 
 core_logger = logging.getLogger("salbot")
 core_logger.setLevel(logging.DEBUG)
@@ -17,6 +18,11 @@ core_logger.addHandler(DiscordFormatter())
 launcher_logger = logging.getLogger("salbot.launcher")
 
 launcher_logger.info("Starting salbot")
+
+# Sentry
+if config.SENTRY_DSN != "":
+    sentry_sdk.init(dsn=config.SENTRY_DSN)
+
 while True:
     try:
         import bot
