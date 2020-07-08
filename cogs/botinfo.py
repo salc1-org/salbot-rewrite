@@ -24,7 +24,7 @@ class BotInfo(commands.Cog):
 
     @commands.command(name="stats", aliases=["botinfo"])
     @has_any_role("Administrator", "Moderator", "Private Chat Access", "Member")
-    async def bot_stats(self, ctx):
+    async def stats_cmd(self, ctx):
         uptime = str(timedelta(seconds=round(time.time() - self.stats["session_uptime_start"])))
 
         stats_embed = discord.Embed(title="SalBot Statistics")
