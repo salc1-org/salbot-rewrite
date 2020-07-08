@@ -7,7 +7,7 @@ from discord.ext.commands import has_any_role
 import config
 import logging
 import os
-from helpers.permissions import developer
+from helpers.permissions import is_dev
 
 bot = commands.Bot("!", allowed_mentions=discord.AllowedMentions(everyone=False, roles=False, users=True))
 logger = logging.getLogger("salbot.core")
@@ -31,7 +31,7 @@ async def on_ready():
             logger.error(f"Failed to load cog {cog}", exc_info=True)
 
 @bot.command(name="reload")
-@developer
+@is_dev
 async def reload(ctx):
     logger.info("Reloading SalBot")
 
