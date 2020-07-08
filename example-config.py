@@ -6,3 +6,4 @@ Fill out all the values and rename this file to example.py
 
 TOKEN = ""
 WEBHOOK_URL = ""
+SENTRY_DSN = ""
