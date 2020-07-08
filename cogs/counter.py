@@ -6,8 +6,8 @@ import logging
 
 
 class AutoResponder(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.bot = bot
         self.logger = logging.getLogger("salbot.faq")
         self.counters = {}
 
@@ -33,5 +33,5 @@ class AutoResponder(commands.Cog):
         self.counters[message.channel.id] += 1
 
 
-def setup(client):
-    client.add_cog(AutoResponder(client))
+def setup(bot):
+    bot.add_cog(AutoResponder(bot))
