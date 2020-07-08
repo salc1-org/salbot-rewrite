@@ -8,8 +8,8 @@ import logging
 
 
 class Info(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.bot = bot
         self.logger = logging.getLogger("salbot.info")
 
     @commands.command(name="userinfo", aliases=["ui", "user"])
@@ -31,5 +31,5 @@ class Info(commands.Cog):
             await self.user_info(ctx, user=ctx.author)
 
 
-def setup(client):
-    client.add_cog(Info(client))
+def setup(bot):
+    bot.add_cog(Info(bot))
