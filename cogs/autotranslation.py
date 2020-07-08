@@ -8,8 +8,8 @@ import googletrans
 
 
 class AutoTranslation(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.bot = bot
         self.logger = logging.getLogger("salbot.autotranslation")
         self.translator = googletrans.Translator()
 
@@ -29,5 +29,5 @@ class AutoTranslation(commands.Cog):
         await message.channel.send(translated.text)
 
 
-def setup(client):
-    client.add_cog(AutoTranslation(client))
+def setup(bot):
+    bot.add_cog(AutoTranslation(bot))
