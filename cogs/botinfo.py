@@ -1,13 +1,14 @@
 """
 Created by vcokltfre at 2020-07-08
 """
-from discord.ext import commands
-from discord.ext.commands import has_any_role
-import discord
+import json
 import logging
 import time
-from datetime import timedelta, datetime
-import json
+from datetime import datetime
+
+import discord
+from discord.ext import commands
+from discord.ext.commands import has_any_role
 
 
 class BotInfo(commands.Cog):
@@ -41,6 +42,7 @@ class BotInfo(commands.Cog):
             desc = f"```json\n{jsd}```"
             embed = discord.Embed(title="Raw Socket Stats", color=0xFF0000, description=desc, timestamp=datetime.now())
             await ctx.channel.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(BotInfo(bot))

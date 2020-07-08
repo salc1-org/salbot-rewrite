@@ -1,11 +1,12 @@
 """
 Created by vcokltfre at 2020-07-08
 """
+import logging
+
+import discord
 from discord.ext import commands
 from discord.ext.commands import has_any_role
-import discord
-import logging
-from datetime import datetime
+
 from helpers.data_struct import MessageQueue
 
 

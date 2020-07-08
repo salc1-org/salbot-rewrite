@@ -1,11 +1,11 @@
 """
 Created by vcokltfre at 2020-07-08
 """
-from discord.ext import commands
-from discord.ext.commands import has_any_role
-import discord
 import logging
 from random import randint
+
+import discord
+from discord.ext import commands
 
 
 class RandomMessage(commands.Cog):
@@ -13,15 +13,15 @@ class RandomMessage(commands.Cog):
         self.bot = bot
         self.logger = logging.getLogger("salbot.random_message")
         self.ids = {
-            "maze":373946864531144726,
-            "vco":297045071457681409
+            "maze": 373946864531144726,
+            "vco": 297045071457681409
         }
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         author = message.author.id
         mention = f"<@{author}>"
-        rnd_int = randint(0,150)
+        rnd_int = randint(0, 150)
 
         if author == self.ids["maze"]:
             if rnd_int == 75:

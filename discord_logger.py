@@ -2,7 +2,9 @@
 Created by Epic at 7/2/20
 """
 import logging
+
 from discord import Webhook, RequestsWebhookAdapter, Embed
+
 import config
 
 

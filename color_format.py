@@ -5,9 +5,9 @@ Unmodified source: https://github.com/FireDiscordBot/bot/blob/master/core/colore
 """
 
 import logging
+import sys
 from copy import copy
 from logging import Logger, DEBUG
-import sys
 
 BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(8)
 

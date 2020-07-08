@@ -1,10 +1,11 @@
 """
 Created by Epic at 7/2/20
 """
-from discord.ext import commands
-import discord
 import logging
+
+import discord
 import googletrans
+from discord.ext import commands
 
 
 class AutoTranslation(commands.Cog):

@@ -1,9 +1,9 @@
 """
 Created by Epic at 7/2/20
 """
-from discord.ext import commands
-import discord
 import logging
+
+from discord.ext import commands
 
 
 class Faq(commands.Cog):

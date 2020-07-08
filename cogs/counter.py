@@ -1,8 +1,9 @@
 """
 Created by Epic at 7/3/20
 """
-from discord.ext import commands
 import logging
+
+from discord.ext import commands
 
 
 class AutoResponder(commands.Cog):
