@@ -16,7 +16,7 @@ class NicknamePolicy(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.session = ClientSession()
-        self.threshold = .5
+        self.threshold = .8
         f = open("data/random-names.txt")
         self.random_names = [i.strip() for i in f.readlines()]
         f.close()
