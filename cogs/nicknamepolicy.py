@@ -28,6 +28,9 @@ class NicknamePolicy(commands.Cog):
         response = await self.session.post(config.MAX_URL + "/model/predict", json=payload)
         return (await response.json())["results"][0]["predictions"]
 
+    def is_ascii(self, name: str):
+        return len(name) == len(name.encode())
+
     async def process_name(self, member: discord.Member):
         prediction = await self.predict(member.display_name)
         role = discord.utils.get(member.guild.roles, name="Muted")
@@ -49,6 +52,14 @@ class NicknamePolicy(commands.Cog):
             try:
                 await member.send(
                     f"Your nickname in Salc1's discord has been changed. Reason: 'hoisting'. Please DM a moderator to appeal this nickname change.")
+            except discord.errors.Forbidden:
+                pass
+            return
+        if not self.is_ascii(member.display_name):
+            await member.edit(nick=choice(self.random_names), reason=f"AntiHoisting")
+            try:
+                await member.send(
+                    f"Your nickname in Salc1's discord has been changed. Reason: 'non-mentionable'. Please DM a moderator to appeal this nickname change.")
             except discord.errors.Forbidden:
                 pass
             return
