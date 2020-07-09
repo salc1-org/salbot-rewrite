@@ -10,7 +10,7 @@ from discord.ext import commands
 import config
 
 
-class AntiOffend(commands.Cog):
+class NicknamePolicy(commands.Cog):
     """Removes nwords from names"""
 
     def __init__(self, bot):
@@ -63,4 +63,4 @@ class AntiOffend(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(AntiOffend(bot))
+    bot.add_cog(NicknamePolicy(bot))
