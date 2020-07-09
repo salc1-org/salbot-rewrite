@@ -33,14 +33,10 @@ class NicknamePolicy(commands.Cog):
 
     async def process_name(self, member: discord.Member):
         prediction = await self.predict(member.display_name)
-        role = discord.utils.get(member.guild.roles, name="Muted")
-        if role in member.roles:
-            return
 
         for name, value in prediction.items():
             if value >= self.threshold:
                 await member.edit(nick=choice(self.random_names), reason=f"AntiOffend [{name}]")
-                await member.add_roles(role, reason=f"AntiOffend [{name}]")
                 try:
                     await member.send(
                         f"Your nickname in Salc1's discord has been changed. Reason: '{name}'. Please DM a moderator to appeal this nickname change.")
