@@ -44,6 +44,14 @@ class AntiOffend(commands.Cog):
                 except discord.errors.Forbidden:
                     pass
                 return
+        if member.display_name[0].lower() < "0":
+            await member.edit(nick=choice(self.random_names), reason=f"AntiHoisting")
+            try:
+                await member.send(
+                    f"Your nickname in Salc1's discord has been changed. Reason: 'hoisting'. Please DM a moderator to appeal this nickname change.")
+            except discord.errors.Forbidden:
+                pass
+            return
 
     @commands.Cog.listener()
     async def on_member_add(self, member: discord.Member):
