@@ -70,10 +70,10 @@ class Moderation(commands.Cog):
             await ctx.channel.send(f"Couldn't mute {member}")
 
     # Temporary unmute command filler, will be replaced with a more comprehensive system soon
-    @commands.command(name="mute", aliases=["silence"])
+    @commands.command(name="unmute")
     @has_any_role("Administrator", "Moderator")
-    async def mute(self, ctx, member: discord.Member):
-        success = await remove_role(member, "Muted", reason="This user has been muted by staff")
+    async def unmute(self, ctx, member: discord.Member):
+        success = await remove_role(member, "Muted", reason="This user has been unmuted by staff")
 
         if success:
             await ctx.channel.send(f"Successfully unmuted {member}")
