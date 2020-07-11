@@ -4,8 +4,9 @@ Created by Epic at 7/8/20
 from random import choice
 
 import discord
-from aiohttp import ClientSession
+from aiohttp import ClientSession, client_exceptions
 from discord.ext import commands
+import logging
 
 import config
 
@@ -15,6 +16,7 @@ class NicknamePolicy(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.logger = logging.getLogger("salbot.cogs.nicknamepolicy")
         self.session = ClientSession()
         self.threshold = .8
         f = open("data/random-names.txt")
@@ -31,31 +33,26 @@ class NicknamePolicy(commands.Cog):
     def is_ascii(self, name: str):
         return len(name) == len(name.encode())
 
-    async def process_name(self, member: discord.Member):
-        prediction = await self.predict(member.display_name)
-
-        for name, value in prediction.items():
-            if value >= self.threshold:
-                await member.edit(nick=choice(self.random_names), reason=f"AntiOffend [{name}]")
-                try:
-                    await member.send(
-                        f"Your nickname in Salc1's discord has been changed. Reason: '{name}'. Please DM a moderator to appeal this nickname change.")
-                except discord.errors.Forbidden:
-                    pass
-                return
-        if member.display_name[0].lower() < "0":
-            await member.edit(nick=choice(self.random_names), reason=f"AntiHoisting")
-            try:
-                await member.send(
-                    f"Your nickname in Salc1's discord has been changed. Reason: 'hoisting'. Please DM a moderator to appeal this nickname change.")
-            except discord.errors.Forbidden:
-                pass
-            return
+    async def is_allowed_nickname(self, member: discord.Member):
+        try:
+            prediction = await self.predict(member.display_name)
+            for name, value in prediction.items():
+                if value >= self.threshold:
+                    return False, name
+        except client_exceptions.ClientConnectionError as e:
+            self.logger.warning("Can't connect to MAX")
         if not self.is_ascii(member.display_name):
-            await member.edit(nick=choice(self.random_names), reason=f"AntiHoisting")
+            return False, "unmentionable name"
+
+        return True, None
+
+    async def process_name(self, member: discord.Member):
+        is_allowed, reason = await self.is_allowed_nickname(member)
+        if not is_allowed:
             try:
+                await member.edit(nick=choice(self.random_names), reason=f"NicknamePolicy [{reason}]")
                 await member.send(
-                    f"Your nickname in Salc1's discord has been changed. Reason: 'non-mentionable'. Please DM a moderator to appeal this nickname change.")
+                    f"Your nickname in Salc1's discord has been changed. Reason: '{reason}'. Please DM a moderator to appeal this nickname change.")
             except discord.errors.Forbidden:
                 pass
             return
