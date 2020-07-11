@@ -21,15 +21,16 @@ class RandomMessage(commands.Cog):
     async def on_message(self, message: discord.Message):
         author = message.author.id
         mention = f"<@{author}>"
-        rnd_int = randint(0, 150)
 
         if author == self.ids["maze"]:
+            rnd_int = randint(0, 150)
             if rnd_int == 75:
                 await message.channel.send(f"Fuck you {mention}")
             elif rnd_int == 123:
                 await message.channel.send(f"Do you like Alex Dillinger, {mention}?")
 
         elif author == self.ids["vco"]:
+            rnd_int = randint(0, 500)
             if rnd_int == 65:
                 await message.channel.send(f"Tired of pinging everyone yet, {mention}?")
 
