@@ -23,6 +23,7 @@ async def on_ready():
     bot.help_command = commands.MinimalHelpCommand()
 
     #bot.load_extension("jishaku")
+    cog_count = [0, 0]
     for cog in os.listdir("cogs/"):
         if not cog.endswith(".py"):
             continue
@@ -30,6 +31,7 @@ async def on_ready():
         logger.debug(f"Loading {cog}")
         try:
             bot.load_extension("cogs." + cog)
+            cog_count[1] += 1
         except ExtensionNotFound:
             logger.error(f"Failed to load cog {cog} - Not Found", exc_info=True)
         except ExtensionAlreadyLoaded:
@@ -38,6 +40,10 @@ async def on_ready():
             logger.error(f"Failed to load cog {cog} - No Setup Function", exc_info=True)
         except ExtensionFailed:
             logger.error(f"Failed to load cog {cog}", exc_info=True)
+        finally:
+            cog_count[0] += 1
+
+    logger.info(f"Successfully loaded {cog_count[1]} cogs ({cog_count[0]} total)")
 
 
 @bot.command(name="reload")
