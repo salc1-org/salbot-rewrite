@@ -11,7 +11,7 @@ from discord.ext import commands
 class RandomMessage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.logger = logging.getLogger("salbot.random_message")
+        self.logger = logging.getLogger("salbot.cogs.random_message")
         self.ids = {
             "maze": 373946864531144726,
             "vco": 297045071457681409

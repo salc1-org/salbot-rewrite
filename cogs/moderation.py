@@ -11,7 +11,7 @@ from discord.ext import commands
 class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.logger = logging.getLogger("salbot.moderation")
+        self.logger = logging.getLogger("salbot.cogs.moderation")
 
     @commands.command(aliases=["b", "plonk"])
     @commands.has_any_role("Administrator", "Moderator")

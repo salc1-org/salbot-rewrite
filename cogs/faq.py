@@ -9,7 +9,7 @@ from discord.ext import commands
 class Faq(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.logger = logging.getLogger("salbot.faq")
+        self.logger = logging.getLogger("salbot.cogs.faq")
         self.questions = [
             {
                 "aliases": ["tos", "terms", "termsofservice"],

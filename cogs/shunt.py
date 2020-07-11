@@ -10,7 +10,7 @@ from discord.ext.commands import has_any_role
 class Shunt(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.logger = logging.getLogger("salbot.shunt")
+        self.logger = logging.getLogger("salbot.cogs.shunt")
 
     @commands.command(name="shunt", aliases=["clownpull"])
     @has_any_role("Administrator", "Moderator")

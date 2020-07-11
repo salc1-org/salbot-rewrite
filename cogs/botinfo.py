@@ -14,7 +14,7 @@ from discord.ext.commands import has_any_role
 class BotInfo(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.logger = logging.getLogger("salbot.botinfo")
+        self.logger = logging.getLogger("salbot.cogs.botinfo")
         self.uptime_start = round(time.time())
         self.socket_stats = {}
         self.opcodes = {
