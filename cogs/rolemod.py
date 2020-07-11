@@ -12,7 +12,7 @@ from helpers.roles import add_role, remove_role
 class RoleMod(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.logger = logging.getLogger("salbot.rolemod")
+        self.logger = logging.getLogger("salbot.cogs.rolemod")
         
     @commands.group(name="rolemod")
     @has_any_role("Moderator", "Administrator")
