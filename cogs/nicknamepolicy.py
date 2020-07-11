@@ -52,7 +52,7 @@ class NicknamePolicy(commands.Cog):
             try:
                 await member.edit(nick=choice(self.random_names), reason=f"NicknamePolicy [{reason}]")
                 await member.send(
-                    f"Your nickname in Salc1's discord has been changed. Reason: '{reason}'. Please DM a moderator to appeal this nickname change.")
+                    f"Your nickname in SalC1's discord has been changed. Reason: '{reason}'. Please DM a moderator to appeal this nickname change.")
             except discord.errors.Forbidden:
                 pass
             return
