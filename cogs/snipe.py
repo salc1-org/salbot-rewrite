@@ -13,7 +13,7 @@ from helpers.data_struct import MessageQueue
 class Snipe(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.logger = logging.getLogger("salbot.botinfo")
+        self.logger = logging.getLogger("salbot.cogs.botinfo")
         self.deletes = {}
 
     @commands.Cog.listener()

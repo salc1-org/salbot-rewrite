@@ -11,7 +11,7 @@ from discord.ext import commands
 class Info(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.logger = logging.getLogger("salbot.info")
+        self.logger = logging.getLogger("salbot.cogs.info")
 
     @commands.command(name="userinfo", aliases=["ui", "user"])
     async def user_info(self, ctx, user: typing.Union[discord.Member, discord.User]):

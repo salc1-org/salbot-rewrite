@@ -9,7 +9,7 @@ from discord.ext import commands
 class AutoResponder(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.logger = logging.getLogger("salbot.faq")
+        self.logger = logging.getLogger("salbot.cogs.counter")
         self.counters = {}
 
     @commands.command()
