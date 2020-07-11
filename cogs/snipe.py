@@ -29,7 +29,7 @@ class Snipe(commands.Cog):
     @has_any_role("Administrator", "Moderator")
     async def snipe(self, ctx, amount=1):
         mid = ctx.channel.id
-        if not str(mid) in self.deletes:
+        if str(mid) not in self.deletes:
             await ctx.channel.send("There is nothing to snipe here!")
             return
 
