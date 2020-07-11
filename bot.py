@@ -6,6 +6,7 @@ import os
 
 import discord
 from discord.ext import commands
+from discord.ext.commands import ExtensionAlreadyLoaded, ExtensionNotFound, NoEntryPointError, ExtensionFailed
 
 import config
 from helpers.permissions import is_dev
@@ -29,7 +30,13 @@ async def on_ready():
         logger.debug(f"Loading {cog}")
         try:
             bot.load_extension("cogs." + cog)
-        except:
+        except ExtensionNotFound:
+            logger.error(f"Failed to load cog {cog} - Not Found", exc_info=True)
+        except ExtensionAlreadyLoaded:
+            logger.error(f"Failed to load cog {cog} - Already Loaded", exc_info=True)
+        except NoEntryPointError:
+            logger.error(f"Failed to load cog {cog} - No Setup Function", exc_info=True)
+        except ExtensionFailed:
             logger.error(f"Failed to load cog {cog}", exc_info=True)
 
 
@@ -45,8 +52,14 @@ async def reload(ctx):
         logger.debug(f"Reloading {cog}")
         try:
             bot.reload_extension("cogs." + cog)
-        except:
-            logger.error(f"Failed to reload cog {cog}", exc_info=True)
+        except ExtensionNotFound:
+            logger.error(f"Failed to load cog {cog} - Not Found", exc_info=True)
+        except ExtensionAlreadyLoaded:
+            logger.error(f"Failed to load cog {cog} - Already Loaded", exc_info=True)
+        except NoEntryPointError:
+            logger.error(f"Failed to load cog {cog} - No Setup Function", exc_info=True)
+        except ExtensionFailed:
+            logger.error(f"Failed to load cog {cog}", exc_info=True)
 
 
 try:
