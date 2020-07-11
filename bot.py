@@ -67,6 +67,10 @@ async def reload(ctx):
         except ExtensionFailed:
             logger.error(f"Failed to load cog {cog}", exc_info=True)
 
+@bot.command(name="shutdown")
+@is_dev()
+async def shutdown(ctx):
+    await bot.logout()
 
 try:
     bot.run(config.TOKEN)
