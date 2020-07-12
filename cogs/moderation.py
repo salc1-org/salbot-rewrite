@@ -3,12 +3,15 @@ Created by Epic at 7/2/20
 """
 import logging
 import typing
+import time
 
 import discord
 from discord.ext import commands
 from discord.ext.commands import has_any_role
 
 from helpers.roles import add_role, remove_role
+from api import api
+
 
 
 class Moderation(commands.Cog):
@@ -61,11 +64,13 @@ class Moderation(commands.Cog):
     # Temporary mute command filler, will be replaced with a more comprehensive system soon
     @commands.command(name="mute", aliases=["silence"])
     @has_any_role("Administrator", "Moderator")
-    async def mute(self, ctx, member: discord.Member):
+    async def mute(self, ctx, member: discord.Member, length: int, *reason):
         success = await add_role(member, "Muted", reason="This user has been muted by staff")
 
         if success:
             await ctx.channel.send(f"Successfully muted {member}")
+            reason = " ".join(reason)
+            api.mute(member.id, round(time.time()) + length, reason, ctx.author.id, member.guild.id)
         else:
             await ctx.channel.send(f"Couldn't mute {member}")
 
