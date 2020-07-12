@@ -64,12 +64,13 @@ class Moderation(commands.Cog):
     # Temporary mute command filler, will be replaced with a more comprehensive system soon
     @commands.command(name="mute", aliases=["silence"])
     @has_any_role("Administrator", "Moderator")
-    async def mute(self, ctx, member: discord.Member, length: int, *reason):
+    async def mute(self, ctx, member: discord.Member, length: int = None, *reason):
         success = await add_role(member, "Muted", reason="This user has been muted by staff")
 
         if success:
             await ctx.channel.send(f"Successfully muted {member}")
-            reason = " ".join(reason)
+            length = 604800 if not length
+            reason = " ".join(reason) if reason else None
             api.mute(member.id, round(time.time()) + length, reason, ctx.author.id, member.guild.id)
         else:
             await ctx.channel.send(f"Couldn't mute {member}")
