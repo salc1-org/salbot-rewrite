@@ -32,7 +32,7 @@ while True:
         import bot
     except Exception as e:
         if isinstance(e, ConnectionAbortedError):
-            launcher_logger.info("Shutting down salbot")
+            launcher_logger.info("Shutting down SalBot")
             break
         launcher_logger.critical("Salbot failed to load", exc_info=e)
         break
