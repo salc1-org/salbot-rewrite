@@ -69,7 +69,7 @@ class Moderation(commands.Cog):
 
         if success:
             await ctx.channel.send(f"Successfully muted {member}")
-            length = 604800 if not length
+            length = 604800 if not length else length
             reason = " ".join(reason) if reason else None
             api.mute(member.id, round(time.time()) + length, reason, ctx.author.id, member.guild.id)
         else:
