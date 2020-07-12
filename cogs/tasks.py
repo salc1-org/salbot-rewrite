@@ -12,7 +12,7 @@ class Tasks(commands.Cog):
         self.cached_guilds = {}
         self.unmute_loop.start()
 
-    @tasks.loop(seconds=15)
+    @tasks.loop(seconds=180)
     async def unmute_loop(self):
         mutes = api.getmutes()
         for muted_user in mutes:
