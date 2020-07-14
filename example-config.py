@@ -8,3 +8,10 @@ TOKEN = ""
 WEBHOOK_URL = ""
 MAX_URL = ""  # https://github.com/IBM/MAX-Toxic-Comment-Classifier
 SENTRY_URL = ""
+
+# API
+API_URL = ""
+API_TOKEN = ""
+
+# Permissions
+DEVELOPER_IDS = []

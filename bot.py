@@ -9,12 +9,13 @@ from discord.ext import commands
 from discord.ext.commands import ExtensionAlreadyLoaded, ExtensionNotFound, NoEntryPointError, ExtensionFailed
 
 import config
-from helpers.permissions import is_dev
+from helpers.permissions import is_dev, is_owner
 
 bot = commands.Bot("!", allowed_mentions=discord.AllowedMentions(everyone=False, roles=False, users=True))
 logger = logging.getLogger("salbot.core")
 
 bot.remove_command("help")
+bot.is_owner = is_owner
 
 
 @bot.event
@@ -22,7 +23,7 @@ async def on_ready():
     logger.info("Launching SalBot")
     bot.help_command = commands.MinimalHelpCommand()
 
-    #bot.load_extension("jishaku")
+    bot.load_extension("jishaku")
     cog_count = [0, 0]
     for cog in os.listdir("cogs/"):
         if not cog.endswith(".py"):
@@ -67,10 +68,12 @@ async def reload(ctx):
         except ExtensionFailed:
             logger.error(f"Failed to load cog {cog}", exc_info=True)
 
+
 @bot.command(name="shutdown")
 @is_dev()
 async def shutdown(ctx):
     await bot.logout()
+
 
 try:
     bot.run(config.TOKEN)
