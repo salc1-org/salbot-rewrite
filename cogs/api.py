@@ -43,7 +43,7 @@ class Api(commands.Cog):
             expires_at_timestamp = 0
 
         data = {
-            "punishment_type": punishment_type,
+            "punishment_type": punishment_type.upper(),
 
             "punished_id": punished_id,
             "moderator_id": moderator_id,
