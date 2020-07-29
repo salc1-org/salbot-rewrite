@@ -28,6 +28,10 @@ class Api(commands.Cog):
         r = await self.session.request(method, full_route, **kwargs)
         return await r.json()
 
+    async def get_punishments(self):
+        route = Route("GET", "/punishments/get")
+        return await self.request(route)
+
 
 
 
