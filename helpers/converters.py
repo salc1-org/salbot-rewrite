@@ -146,7 +146,7 @@ class UserFriendlyTime(commands.Converter):
         try:
             calendar = HumanTime.calendar
             regex = ShortTime.compiled
-            now = ctx.message.created_at
+            now = datetime.datetime.now()
 
             match = regex.match(argument)
             if match is not None and match.group(0):

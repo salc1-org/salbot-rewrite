@@ -57,7 +57,7 @@ class Api(commands.Cog):
             "punished_id": punished_id,
             "moderator_id": moderator_id,
 
-            "punished_at": datetime.utcnow().timestamp(),
+            "punished_at": datetime.now().timestamp(),
             "expires_at": expires_at_timestamp,
 
             "reason": reason

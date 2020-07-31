@@ -6,8 +6,10 @@ import typing
 
 from helpers.converters import UserFriendlyTime
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from discord.ext.commands import has_any_role
+import config
+from datetime import datetime
 
 
 class Moderation(commands.Cog):
@@ -15,6 +17,8 @@ class Moderation(commands.Cog):
         self.bot = bot
         self.logger = logging.getLogger("salbot.cogs.moderation")
         self.api = self.bot.get_cog("Api")
+
+        self.autopardon_loop.start()
 
     @commands.command(aliases=["b", "plonk"])
     @has_any_role("Administrator", "Moderator")
@@ -78,6 +82,31 @@ class Moderation(commands.Cog):
                             pass
                     await self.api.mark_punishment_as_expired(punishment["punishment_id"])
         await ctx.send("Done")
+
+    @tasks.loop(seconds=10)
+    async def autopardon_loop(self):
+        guild = await self.bot.fetch_guild(config.GUILD_ID)
+        muted_role = discord.utils.get(guild.roles, name="Muted")
+        current_time = datetime.now()
+        punishments = await self.api.get_punishments()
+        for punishment in punishments:
+            expires_at = datetime.fromtimestamp(punishment["expires_at"])
+            if current_time > expires_at and not punishment["expired"]:
+                punishment_type = punishment["punishment_type"].lower()
+                if punishment_type == "ban":
+                    try:
+                        await self.bot.http.unban(punishment["punished_id"], guild.id,
+                                                  reason="[Auto] Punishment expired")
+                    except:
+                        pass
+                    await self.api.mark_punishment_as_expired()
+                elif punishment_type == "mute":
+                    try:
+                        await self.bot.http.remove_role(guild.id, punishment["punished_id"], muted_role.id,
+                                                        reason="[Auto] Punishment expired")
+                    except:
+                        pass
+                    await self.api.mark_punishment_as_expired(punishment["punishment_id"])
 
 
 def setup(bot):
