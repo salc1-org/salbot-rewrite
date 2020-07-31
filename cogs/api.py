@@ -71,11 +71,11 @@ class Api(commands.Cog):
         await self.request(route, json={"punishment_id": punishment_id})
 
     async def get_faq(self, name: str):
-        route = Route("GET", "/faq")
+        route = Route("GET", "/faq/")
         return await self.request(route, json={"search": name})
 
     async def create_faq(self, name: str, description: str):
-        route = Route("PUT", "/faq")
+        route = Route("PUT", "/faq/")
         await self.request(route, json={"name": name, "description": description})
 
 

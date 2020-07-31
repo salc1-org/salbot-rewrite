@@ -10,42 +10,20 @@ class Faq(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.logger = logging.getLogger("salbot.cogs.faq")
-        self.questions = [
-            {
-                "aliases": ["tos", "terms", "termsofservice"],
-                "text": "Read the discord terms of service at https://discord.com/terms"
-            },
-            {
-                "aliases": ["dgl", "guidelines", "discordguidelines"],
-                "text": "Read the discord guidelines at https://discord.com/guidelines"
-            },
-            {
-                "aliases": ["dupe"],
-                "text": "Please do not mention duping on servers that do not allow it as it's against Discord's ToS."
-            }
-        ]
-        self.mappped_questions = {}
-
-        for question in self.questions:
-            for alias in question["aliases"]:
-                self.mappped_questions[alias] = question["text"]
+        self.api = self.bot.get_cog("Api")
 
     @commands.command(aliases=["dgl", "tos"])
-    async def faq(self, ctx, entry=None):
-        if entry is None:
-            description = ""
-            description += "**FAQ Commands:**\n```md\n"
-            for question in self.questions:
-                description += f"+ {question['aliases'][0]}\n"
-            description += "```"
-            await ctx.send(description)
-            return
-        text = ""
-        if entry not in self.mappped_questions.keys():
+    async def faq(self, ctx, entry):
+        answer = await self.api.get_faq(entry)
+        if answer is None:
             return await ctx.send("Not found.")
-        for splitted in self.mappped_questions[entry].split("\n"):
-            text += f"> {splitted}\n"
-        await ctx.send(text)
+        await ctx.send("> " + answer)
+
+    @commands.command()
+    @commands.has_any_role("Moderator", "Administrator")
+    async def createfaq(self, ctx, name, *, description):
+        await self.api.create_faq(name, description)
+        await ctx.send("Done")
 
 
 def setup(bot):
