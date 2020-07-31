@@ -62,21 +62,21 @@ class Moderation(commands.Cog):
     async def pardon(self, ctx: commands.Context, users: commands.Greedy[typing.Union[discord.Member, discord.User]]):
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         for user in users:
-            for punishment in self.api.get_punishments(user.id):
-                punishment_type = punishment["punishment_type"]
+            for punishment in await self.api.get_punishments(user.id):
+                punishment_type = punishment["punishment_type"].lower()
                 if punishment_type == "ban":
                     try:
                         await ctx.guild.unban(user)
                     except:
                         pass
                     await self.api.mark_punishment_as_expired()
-                elif punishment_type == "unmute":
+                elif punishment_type == "mute":
                     if isinstance(user, discord.Member):
                         try:
                             await user.remove_roles(muted_role, reason="Pardoned")
                         except:
                             pass
-                    await self.api.mark_punishment_as_expired()
+                    await self.api.mark_punishment_as_expired(punishment["punishment_id"])
         await ctx.send("Done")
 
 
