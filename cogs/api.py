@@ -64,9 +64,9 @@ class Api(commands.Cog):
         route = Route("PUT", "/punishments/add")
         return await self.request(route, json=data)
 
-    async def mark_punishment_as_expired(self):
+    async def mark_punishment_as_expired(self, punishment_id):
         route = Route("POST", "/punishments/expire")
-        await self.request(route)
+        await self.request(route, json={"punishment_id": punishment_id})
 
     async def get_faq(self, name: str):
         route = Route("GET", "/faq")
