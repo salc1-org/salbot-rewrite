@@ -31,9 +31,16 @@ class Api(commands.Cog):
         r = await self.session.request(method, full_route, **kwargs)
         return await r.json()
 
-    async def get_punishments(self):
+    async def get_punishments(self, user_id=None):
         route = Route("GET", "/punishments/get")
-        return await self.request(route)
+        punishments = await self.request(route)
+        if user_id is not None:
+            new_punishments = []
+            for punishment in punishments:
+                if punishment["punished_id"] == user_id:
+                    new_punishments.append(punishment)
+            return new_punishments
+        return punishments
 
     async def create_punishment(self, punishment_type: str, punished_id: int, moderator_id: int, expires_at: datetime,
                                 reason=""):
@@ -56,6 +63,10 @@ class Api(commands.Cog):
 
         route = Route("PUT", "/punishments/add")
         return await self.request(route, json=data)
+
+    async def mark_punishment_as_expired(self):
+        route = Route("POST", "/punishments/expire")
+        await self.request(route)
 
     async def get_faq(self, name: str):
         route = Route("GET", "/faq")
