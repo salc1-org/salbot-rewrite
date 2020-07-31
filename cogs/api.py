@@ -29,6 +29,8 @@ class Api(commands.Cog):
         kwargs["headers"] = self.authentication_headers
 
         r = await self.session.request(method, full_route, **kwargs)
+        if r.status != 200:
+            raise self.ApiException(await r.text())
         return await r.json()
 
     async def get_punishments(self, user_id=None):
