@@ -57,6 +57,14 @@ class Api(commands.Cog):
         route = Route("PUT", "/punishments/add")
         return await self.request(route, json=data)
 
+    async def get_faq(self, name: str):
+        route = Route("GET", "/faq")
+        return await self.request(route, json={"search": name})
+
+    async def create_faq(self, name: str, description: str):
+        route = Route("PUT", "/faq")
+        await self.request(route, json={"name": name, "description": description})
+
 
 def setup(bot):
     bot.add_cog(Api(bot))
