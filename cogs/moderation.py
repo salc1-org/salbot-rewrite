@@ -32,7 +32,8 @@ class Moderation(commands.Cog):
     @commands.command(aliases=["tb"])
     @has_any_role("Administrator", "Moderator")
     async def tempban(self, ctx, users: commands.Greedy[typing.Union[discord.Member, discord.User]],
-                      time: UserFriendlyTime, *, reason: str = None):
+                      time: UserFriendlyTime(commands.clean_content, default='\u2026'), *, reason: str = None):
+        time = time.dt
         for user in users:
             await ctx.guild.ban(user, reason=reason)
             await ctx.message.delete()
@@ -47,7 +48,8 @@ class Moderation(commands.Cog):
     @commands.command()
     @has_any_role("Administrator", "Moderator")
     async def mute(self, ctx, users: commands.Greedy[typing.Union[discord.Member, discord.User]],
-                   time: UserFriendlyTime, *, reason: str = None):
+                   time: UserFriendlyTime(commands.clean_content, default='\u2026'), *, reason: str = None):
+        time = time.dt
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         for user in users:
             await user.add_roles(muted_role, reason="Muted")
