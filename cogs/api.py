@@ -23,8 +23,10 @@ class Api(commands.Cog):
             super().__init__(message)
 
     async def request(self, route: Route, **kwargs):
-        full_route = config.API_URL + route.route
+        full_route = kwargs.get("base_uri") or config.API_URL + route.route
         method = route.method
+
+        kwargs.pop("base_uri", None)
 
         kwargs["headers"] = self.authentication_headers
 
@@ -77,6 +79,14 @@ class Api(commands.Cog):
     async def create_faq(self, name: str, description: str):
         route = Route("PUT", "/faq/")
         await self.request(route, json={"name": name, "description": description})
+
+    async def predict_toxicity(self, text: str):
+        route = Route("POST", "/models/predict")
+        payload = {
+            "text": [text]
+        }
+        return (await self.request(route, base_uri=config.MAX_URL, json=payload))["results"][0]["predictions"]
+
 
 
 def setup(bot):

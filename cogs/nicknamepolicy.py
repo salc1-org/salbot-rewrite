@@ -4,7 +4,7 @@ Created by Epic at 7/8/20
 from random import choice
 
 import discord
-from aiohttp import ClientSession, client_exceptions
+from aiohttp import client_exceptions
 from discord.ext import commands
 import logging
 
@@ -17,25 +17,18 @@ class NicknamePolicy(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.logger = logging.getLogger("salbot.cogs.nicknamepolicy")
-        self.session = ClientSession()
+        self.api = self.bot.get_cog("Api")
         self.threshold = .8
         f = open("data/random-names.txt")
         self.random_names = [i.strip() for i in f.readlines()]
         f.close()
-
-    async def predict(self, text):
-        payload = {
-            "text": [text]
-        }
-        response = await self.session.post(config.MAX_URL + "/model/predict", json=payload)
-        return (await response.json())["results"][0]["predictions"]
 
     def is_ascii(self, name: str):
         return len(name) == len(name.encode())
 
     async def is_allowed_nickname(self, member: discord.Member):
         try:
-            prediction = await self.predict(member.display_name)
+            prediction = await self.api.predict_toxicity(member.display_name)
             for name, value in prediction.items():
                 if value >= self.threshold:
                     return False, name
