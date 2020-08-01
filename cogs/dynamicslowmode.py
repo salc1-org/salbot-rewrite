@@ -43,6 +43,7 @@ class DynamicSlowmode(commands.Cog):
             if rate_limit and message.channel.slowmode_delay < self.toxicity_cooldown:
                 embed = discord.Embed(title="[Auto] Chat suspended",
                                       description="The chat has been automatically suspended for toxicity.", color=0xFF0000)
+                await message.channel.purge(limit=10)
                 await message.channel.send(embed=embed, delete_after=10)
                 await message.channel.edit(slowmode_delay=self.toxicity_cooldown)
                 await asyncio.sleep(self.cooldown_time)
@@ -53,6 +54,7 @@ class DynamicSlowmode(commands.Cog):
             if rate_limit and message.channel.slowmode_delay < self.normal_cooldown:
                 embed = discord.Embed(title="[Auto] Chat suspended",
                                       description="The chat has been automatically suspended.", color=0xFF0000)
+                await message.channel.purge(limit=10)
                 await message.channel.send(embed=embed, delete_after=10)
                 await message.channel.edit(slowmode_delay=self.normal_cooldown)
                 await asyncio.sleep(self.cooldown_time)
