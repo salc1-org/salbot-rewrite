@@ -10,6 +10,8 @@ from discord.ext import commands, tasks
 from discord.ext.commands import has_any_role
 import config
 from datetime import datetime
+from jishaku.paginators import PaginatorEmbedInterface
+from discord.ext.commands import Paginator
 
 
 class Moderation(commands.Cog):
@@ -82,6 +84,18 @@ class Moderation(commands.Cog):
                             pass
                     await self.api.mark_punishment_as_expired(punishment["punishment_id"])
         await ctx.send("Done")
+
+    @commands.command()
+    async def history(self, ctx, user: discord.User):
+        punishments = await self.api.get_punishments(user_id=user.id)
+        paginator = PaginatorEmbedInterface(self.bot, paginator=Paginator(prefix="", suffix=""))
+
+        for punishment in punishments:
+            await paginator.add_line(
+                f"**{punishment['punishment_type']}** ({punishment['punishment_id']}) - {punishment['reason']} by <@{punishment['moderator_id']}>")
+        if paginator.page_count == 0:
+            await paginator.add_line("This user doesn't have any punishments!")
+        await paginator.send_to(ctx)
 
     @tasks.loop(seconds=10)
     async def autopardon_loop(self):
