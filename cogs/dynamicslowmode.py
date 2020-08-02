@@ -17,6 +17,7 @@ class DynamicSlowmode(commands.Cog):
 
         self.normal_cooldown_mapping = commands.CooldownMapping.from_cooldown(3, 5, commands.BucketType.channel)
         self.toxicity_cooldown_mapping = commands.CooldownMapping.from_cooldown(2, 5, commands.BucketType.channel)
+        self.lockdown_cooldown_mapping = commands.CooldownMapping.from_cooldown(5, 2, commands.BucketType.channel)
         self.normal_cooldown = 10
         self.toxicity_cooldown = 20
         self.default_cooldown = 0
@@ -42,12 +43,14 @@ class DynamicSlowmode(commands.Cog):
 
             if rate_limit and message.channel.slowmode_delay < self.toxicity_cooldown:
                 embed = discord.Embed(title="[Auto] Chat suspended",
-                                      description="The chat has been automatically suspended for toxicity.", color=0xFF0000)
+                                      description="The chat has been automatically suspended for toxicity.",
+                                      color=0xFF0000)
                 await message.channel.purge(limit=10)
                 await message.channel.send(embed=embed, delete_after=10)
                 await message.channel.edit(slowmode_delay=self.toxicity_cooldown)
                 await asyncio.sleep(self.cooldown_time)
                 await message.channel.edit(slowmode_delay=self.cooldown_time)
+                return
         else:
             rate_limit = self.normal_cooldown_mapping.update_rate_limit(message)
 
@@ -59,6 +62,16 @@ class DynamicSlowmode(commands.Cog):
                 await message.channel.edit(slowmode_delay=self.normal_cooldown)
                 await asyncio.sleep(self.cooldown_time)
                 await message.channel.edit(slowmode_delay=self.cooldown_time)
+                return
+
+        rate_limit = self.lockdown_cooldown_mapping.update_rate_limit(message)
+        if rate_limit:
+            await message.channel.set_permissions(message.guild.default_role, send_messages=False)
+            embed = discord.Embed(title="[Auto] Chat suspended",
+                                  description="The chat has been automatically suspended.", color=0xFF0000)
+            await message.channel.send(embed=embed)
+            await asyncio.sleep(self.cooldown_time)
+            await message.channel.set_permissions(message.guild.default_role, send_messages=True)
 
 
 def setup(bot):
