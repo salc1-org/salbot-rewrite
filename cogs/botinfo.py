@@ -18,7 +18,7 @@ class BotInfo(commands.Cog):
         self.uptime_start = round(time.time())
         self.socket_stats = {}
         self.opcodes = {
-            10: "Hello",
+            10: "HELLO",
             11: "HEARTBEAT",
             9: "HI",
             7: "RECONNECT"
