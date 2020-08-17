@@ -15,7 +15,6 @@ bot = commands.Bot("!", allowed_mentions=discord.AllowedMentions(everyone=False,
 logger = logging.getLogger("salbot.core")
 
 bot.remove_command("help")
-bot.is_owner = is_owner
 
 
 @bot.event
