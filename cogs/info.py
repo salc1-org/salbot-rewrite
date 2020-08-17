@@ -18,7 +18,7 @@ class Info(commands.Cog):
         embed = discord.Embed(color=0x00FFFF)
         embed.set_author(name=str(user), icon_url=user.avatar_url)
         embed.add_field(name="UserID", value=user.id, inline=True)
-        embed.add_field(name="In server", value="yes" if isinstance(user, discord.Member) else "no")
+        embed.add_field(name="In server", value=("no", "yes")[isinstance(user, discord.Member)])
         embed.add_field(name="Created at", value=user.created_at.strftime('%A, %d. %B %Y @ %H:%M:%S'), inline=True)
         if isinstance(user, discord.Member):
             embed.add_field(name="Joined at", value=user.joined_at.strftime('%A, %d. %B %Y @ %H:%M:%S'), inline=True)
