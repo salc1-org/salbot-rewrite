@@ -29,6 +29,5 @@ class MemberRankup(commands.Cog):
         self.logger.info(f"Removed member from {user}. Requested by {ctx.author}")
 
 
-
 def setup(bot):
     bot.add_cog(MemberRankup(bot))
