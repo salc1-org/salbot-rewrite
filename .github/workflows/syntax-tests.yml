@@ -19,4 +19,4 @@ jobs:
         pip install -r requirements.txt
     - name: Checks
       run: |
-        flake8 --show-source --statistics
+        flake8 --max-complexity=10 --max-line-length=127 --show-source --statistics
