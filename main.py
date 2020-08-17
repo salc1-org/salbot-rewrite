@@ -30,7 +30,7 @@ if SENTRY_URL:
 
 while True:
     try:
-        import bot
+        import bot  # noqa: F401
     except Exception as e:
         if isinstance(e, ConnectionAbortedError):
             launcher_logger.info("Shutting down SalBot")

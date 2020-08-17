@@ -89,7 +89,7 @@ class Time(HumanTime):
     def __init__(self, argument, *, now=None):
         try:
             o = ShortTime(argument, now=now)
-        except Exception as e:
+        except Exception:
             super().__init__(argument)
         else:
             self.dt = o.dt

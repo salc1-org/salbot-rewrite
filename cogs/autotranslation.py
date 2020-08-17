@@ -16,7 +16,7 @@ class AutoTranslation(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        if 1 == 1: #Temporarily disable until approved
+        if True:  # Temporarily disable until approved
             return
 
         if not message.guild:

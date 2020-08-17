@@ -91,8 +91,10 @@ class Moderation(commands.Cog):
         paginator = PaginatorEmbedInterface(self.bot, paginator=Paginator(prefix="", suffix=""))
 
         for punishment in punishments:
-            await paginator.add_line(
-                f"**{punishment['punishment_type']}** ({punishment['punishment_id']}) - {punishment['reason']} by <@{punishment['moderator_id']}>")
+            # TODO: This code is awful, please shorten it.
+            formatted = f"**{punishment['punishment_type']}** " \
+                        f"({punishment['punishment_id']}) - {punishment['reason']} by <@{punishment['moderator_id']}>"
+            await paginator.add_line(formatted)
         if paginator.page_count == 0:
             await paginator.add_line("This user doesn't have any punishments!")
         await paginator.send_to(ctx)

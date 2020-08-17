@@ -13,7 +13,7 @@ class RoleMod(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.logger = logging.getLogger("salbot.cogs.rolemod")
-        
+
     @commands.group(name="rolemod")
     @has_any_role("Moderator", "Administrator")
     async def rolemod(self, ctx):

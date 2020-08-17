@@ -88,6 +88,5 @@ class Api(commands.Cog):
         return (await self.request(route, base_uri=config.MAX_URL, json=payload))["results"][0]["predictions"]
 
 
-
 def setup(bot):
     bot.add_cog(Api(bot))

@@ -8,8 +8,6 @@ from aiohttp import client_exceptions
 from discord.ext import commands
 import logging
 
-import config
-
 
 class NicknamePolicy(commands.Cog):
     """Removes nwords from names"""
@@ -32,7 +30,7 @@ class NicknamePolicy(commands.Cog):
             for name, value in prediction.items():
                 if value >= self.threshold:
                     return False, name
-        except client_exceptions.ClientConnectionError as e:
+        except client_exceptions.ClientConnectionError:
             self.logger.warning("Can't connect to MAX")
         if not self.is_ascii(member.display_name):
             return False, "unmentionable name"
@@ -45,7 +43,8 @@ class NicknamePolicy(commands.Cog):
             try:
                 await member.edit(nick=choice(self.random_names), reason=f"NicknamePolicy [{reason}]")
                 await member.send(
-                    f"Your nickname in SalC1's discord has been changed. Reason: '{reason}'. Please DM a moderator to appeal this nickname change.")
+                    f"Your nickname in SalC1's discord has been changed.\n"
+                    f"Reason: '{reason}'. Please DM a moderator to appeal this nickname change.")
             except discord.errors.Forbidden:
                 pass
             return

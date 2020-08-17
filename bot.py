@@ -9,7 +9,7 @@ from discord.ext import commands
 from discord.ext.commands import ExtensionAlreadyLoaded, ExtensionNotFound, NoEntryPointError, ExtensionFailed
 
 import config
-from helpers.permissions import is_dev, is_owner
+from helpers.permissions import is_dev
 
 bot = commands.Bot("!", allowed_mentions=discord.AllowedMentions(everyone=False, roles=False, users=True))
 logger = logging.getLogger("salbot.core")
