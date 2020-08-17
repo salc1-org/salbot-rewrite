@@ -36,7 +36,7 @@ class DynamicSlowmode(commands.Cog):
                     is_toxic = True
                     break
         except client_exceptions.ClientConnectionError:
-            self.logger.warning("Could not connect to MAX")
+            self.logger.warning("Can't connect to MAX")
             is_toxic = False
         if is_toxic:
             rate_limit = self.toxicity_cooldown_mapping.update_rate_limit(message)
