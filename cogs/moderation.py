@@ -28,9 +28,7 @@ class Moderation(commands.Cog):
         for user in users:
             await ctx.guild.ban(user, reason=reason)
             await ctx.message.delete()
-            embed = discord.Embed()
-            embed.colour = 0xFF0000
-            embed.description = f"Banned {user.mention}!"
+            embed = discord.Embed(description = f"Banned {user.mention}!", colour = 0xFF0000)
             await ctx.send(embed=embed)
             await self.api.create_punishment(punishment_type="ban", punished_id=user.id, moderator_id=ctx.author.id,
                                              expires_at=None, reason=reason)
@@ -43,9 +41,7 @@ class Moderation(commands.Cog):
         for user in users:
             await ctx.guild.ban(user, reason=reason)
             await ctx.message.delete()
-            embed = discord.Embed()
-            embed.colour = 0xFF0000
-            embed.description = f"Banned {user.mention}!"
+            embed = discord.Embed(description = f"Banned {user.mention}!", colour = 0xFF0000)
             await ctx.send(embed=embed)
             await self.api.create_punishment(punishment_type="ban", punished_id=user.id, moderator_id=ctx.author.id,
                                              expires_at=time, reason=reason)
